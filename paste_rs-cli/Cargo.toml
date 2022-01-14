@@ -1,0 +1,28 @@
+[package]
+name = "paste_rs-cli"
+readme = "README.md"
+description = "A simple cli tool for https://paste.rs/"
+license = "MIT"
+homepage = "https://github.com/Canvas02/paste_rs-cli"
+repository = "https://github.com/Canvas02/paste_rs-cli"
+keywords = ["cli", "paste"]
+categories = ["command-line-utilities"]
+authors = ["Canvas02 <Canvas02@protonmail.com>"]
+version = "0.2.1"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+clap = { version = "3.0", features = ["derive"] }
+tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
+paste_rs-cli = { path = "paste-rs_api" }
+# directories = "4.0"
+
+[profile.release]
+lto = true
+opt-level = 3
+incremental = true
+
+[workspace]
+members = ["paste-rs_api"]
