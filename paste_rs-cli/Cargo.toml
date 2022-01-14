@@ -16,10 +16,5 @@ edition = "2021"
 [dependencies]
 clap = { version = "3.0", features = ["derive"] }
 tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
-# paste_rs-cli = { path = "../paste-rs_api" }
+paste_rs_api = "0.1.0"
 # directories = "4.0"
-
-[profile.release]
-lto = true
-opt-level = 3
-incremental = true

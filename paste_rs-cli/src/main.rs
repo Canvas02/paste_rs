@@ -11,8 +11,8 @@
 // TODO: implement cache
 // mod cache;
 
-use crate::paste::Url;
 use clap::{AppSettings, Parser, Subcommand};
+use paste_rs_api::Url;
 use std::fs;
 
 #[tokio::main]
@@ -60,7 +60,7 @@ async fn main() {
                 }
             };
 
-            let url = match paste::new_paste(data).await {
+            let url = match paste_rs_api::new_paste(data).await {
                 Ok(res) => res,
                 Err(err) => {
                     eprintln!("ERROR: {:#?}", err);
