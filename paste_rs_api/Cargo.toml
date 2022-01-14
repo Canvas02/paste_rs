@@ -4,8 +4,8 @@ description = "A simple async rust library for using the api of [paste.rs](https
 readme = "README.md"
 license = "MIT"
 authors = ["Canvas02 <Canvas02@protonmail.com>"]
-homepage = "https://github.com/Canvas02/paste_rs-cli"
-repository = "https://github.com/Canvas02/paste_rs-cli"
+homepage = "https://github.com/Canvas02/paste_rs"
+repository = "https://github.com/Canvas02/paste_rs"
 version = "0.1.0"
 edition = "2021"
 
