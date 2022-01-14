@@ -11,6 +11,18 @@ use reqwest::Client;
 
 const PASTE_RS_URL: &str = "https://paste.rs/";
 
+/// Used to make a new paste
+/// Example:
+/// ```rust
+/// use paste_rs_api::new_paste;
+///
+/// #[tokio::main]
+///async fn main() {
+///     let url = new_paste("Hello World".to_string()).await.unwrap();
+///
+///     let res = url.make_request().await.unwrap();
+/// }
+/// ```
 pub async fn new_paste(data: String) -> Result<Url, reqwest::Error> {
     let client = Client::new();
     let res = client
@@ -45,6 +57,18 @@ impl std::fmt::Display for Url {
 }
 
 impl Url {
+    /// Create a new `Url` struct
+    /// Example:
+    /// ```rust
+    /// use paste_rs_api::Url;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let url = Url::new("osx").unwrap();
+    ///
+    ///     let res = url.make_request().await.unwrap();
+    /// }
+    /// ```
     pub fn new(val: &str) -> Result<Url, String> {
         // cheching if the argument is an url
         if is_url(val) && is_paste_rs_url(val) {
@@ -59,18 +83,32 @@ impl Url {
             Err("Invalid argument".to_string())
         }
     }
-
+    /// Method to get the url inside the struct
     pub fn get_url(&self) -> &String {
         let Url(url) = self;
         url
     }
 
+    /// Method to get the id of the Url
     pub fn get_id(&mut self) -> String {
         let Url(url) = self;
         url.replace_range(0..PASTE_RS_URL.len(), "");
         url.clone()
     }
 
+    /// Method to make the request
+    /// Example:
+    ///
+    /// ```rust
+    /// use paste_rs_api::Url;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let url = Url::new("osx").unwrap();
+    ///
+    ///     let res = url.make_request().await.unwrap();
+    /// }
+    /// ```
     pub async fn make_request(&self) -> Result<String, reqwest::Error> {
         let res = reqwest::get(self.get_url())
             .await?

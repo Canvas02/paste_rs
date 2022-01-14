@@ -1,2 +1,2 @@
 [workspace]
-members = ["paste_rs-cli", "paste_rs-api"]
+members = ["paste_rs-cli", "paste_rs_api"]
