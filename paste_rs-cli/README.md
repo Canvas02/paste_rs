@@ -11,3 +11,4 @@ to install:
 ```shell
 cargo install --locked paste_rs-cli
 ```
+or install [the pre-built binaries](https://github.com/Canvas02/paste_rs/releases)
