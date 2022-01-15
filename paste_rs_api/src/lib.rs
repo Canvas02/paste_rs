@@ -84,7 +84,7 @@ impl Url {
         }
     }
     /// Method to get the url inside the struct
-    pub fn get_url(&self) -> &String {
+    pub const fn get_url(&self) -> &String {
         let Url(url) = self;
         url
     }
