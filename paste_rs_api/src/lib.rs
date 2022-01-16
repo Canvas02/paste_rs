@@ -90,10 +90,11 @@ impl Url {
     }
 
     /// Method to get the id of the Url
-    pub fn get_id(&mut self) -> String {
+    pub fn get_id(&self) -> String {
         let Url(url) = self;
-        url.replace_range(0..PASTE_RS_URL.len(), "");
-        url.clone()
+        let mut url_clone = url.clone();
+        url_clone.replace_range(0..PASTE_RS_URL.len(), "");
+        url_clone
     }
 
     /// Method to make the request
