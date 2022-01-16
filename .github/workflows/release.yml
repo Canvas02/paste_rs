@@ -30,4 +30,4 @@ jobs:
           RUSTTARGET: ${{ matrix.target }}
           ARCHIVE_TYPES: ${{ matrix.archive }}
           SRC_DIR: "paste_rs-cli"
-          MINIFY: "yes"
+          MINIFY: "true"
