@@ -10,10 +10,6 @@
 
 // TODO: create -o(--output) flag for `get` to output to a file
 
-// TODO: implement cache
-// TODO: create -f(--force) flag for `get` to force to fetch again and not pull from cache
-// mod cache;
-
 use clap::{AppSettings, Parser, Subcommand};
 use paste_rs_api::Url;
 use std::fs;
