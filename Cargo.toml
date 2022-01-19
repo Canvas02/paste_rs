@@ -4,3 +4,11 @@ members = ["paste_rs-cli", "paste_rs_api"]
 [profile.release]
 lto = true
 opt-level = 3
+
+[profile.release-debug]
+inherits = "release"
+debug = true
+
+[profile.release-size]
+inherits = "release"
+opt-level = "s"

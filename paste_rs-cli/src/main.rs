@@ -8,9 +8,12 @@
 #![deny(dead_code)]
 #![deny(unused_variables)]
 
+mod cli;
+
 // TODO: create -o(--output) flag for `get` to output to a file
 
-use clap::{AppSettings, Parser, Subcommand};
+use crate::cli::{Cli, Commands};
+use clap::Parser;
 use paste_rs_api::Url;
 use std::fs;
 
@@ -69,33 +72,6 @@ async fn main() {
             println!("Successfully created new paste at {}", url);
         }
     }
-}
-
-#[derive(Parser)]
-#[clap(name = "paste-rs")]
-#[clap(about = "a simple cli tool for https://paste.rs")]
-struct Cli {
-    #[clap(subcommand)]
-    command: Commands,
-}
-
-#[derive(Subcommand)]
-enum Commands {
-    // Command to get a paste
-    #[clap(setting(AppSettings::ArgRequiredElseHelp))]
-    #[clap(about = "Get a paste")]
-    Get {
-        #[clap(required = true)]
-        val: String,
-    },
-
-    // Command to make a paste
-    #[clap(setting(AppSettings::ArgRequiredElseHelp))]
-    #[clap(about = "Make a new paste")]
-    New {
-        #[clap(required = true)]
-        file: String,
-    },
 }
 
 // => A main for testing
