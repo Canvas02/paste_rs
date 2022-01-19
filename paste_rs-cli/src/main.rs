@@ -1,8 +1,8 @@
 // Copyright 2022 Canvas02 <Canvas02@protonmail.com>
 // SPDX-License-Identifier: MIT
 
-// #![deny(dead_code)]
-// #![deny(unused_variables)]
+#![deny(dead_code)]
+#![deny(unused_variables)]
 
 mod cli;
 

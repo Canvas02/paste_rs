@@ -8,7 +8,7 @@ repository = "https://github.com/Canvas02/paste_rs"
 keywords = ["cli", "paste"]
 categories = ["command-line-utilities"]
 authors = ["Canvas02 <Canvas02@protonmail.com>"]
-version = "0.3.2"
+version = "0.4.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
@@ -17,4 +17,3 @@ edition = "2021"
 clap = { version = "~3.0", features = ["derive"] }
 tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
 paste_rs_api = "~0.1"
-# directories = "4.0"
