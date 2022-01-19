@@ -1,12 +1,8 @@
-// Copyright 2022 Canvas02.
+// Copyright 2022 Canvas02 <Canvas02@protonmail.com>
 // SPDX-License-Identifier: MIT
 
-// ! Used in development never turn on for a production build
-// #![allow(dead_code)]
-// #![allow(unused_variables)]
-// ! enable for production build
-#![deny(dead_code)]
-#![deny(unused_variables)]
+// #![deny(dead_code)]
+// #![deny(unused_variables)]
 
 mod cli;
 
@@ -22,7 +18,7 @@ async fn main() {
     let args = Cli::parse();
 
     match &args.command {
-        Commands::Get { val } => {
+        Commands::Get { val, output } => {
             let url = match Url::new(&*val) {
                 Ok(val) => val,
                 Err(err) => {
@@ -39,18 +35,30 @@ async fn main() {
                 }
             };
 
-            // Cache work goes here
+            match output {
+                Some(path) => {
+                    match fs::write(path, res) {
+                        Ok(_) => {}
+                        Err(err) => {
+                            eprintln!("ERROR: {:#?}", err);
+                            std::process::exit(-1);
+                        }
+                    }
+                    println!("Successfully wrote {} to {}", url, path.display())
+                }
+                None => {
+                    println!(
+                        "====\t{}\t======================================================",
+                        url
+                    );
+                    println!("");
+                    println!("{}", res);
+                    println!("");
+                    println!("======================================================================================");
 
-            println!(
-                "====\t{}\t======================================================",
-                url
-            );
-            println!("");
-            println!("{}", res);
-            println!("");
-            println!("======================================================================================");
-
-            std::process::exit(0);
+                    std::process::exit(0);
+                }
+            }
         }
         Commands::New { file } => {
             let data = match fs::read_to_string(file) {
