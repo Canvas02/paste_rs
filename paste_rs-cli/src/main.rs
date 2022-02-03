@@ -4,52 +4,40 @@
 #![deny(dead_code)]
 #![deny(unused_variables)]
 
+#[macro_use]
+extern crate anyhow;
+
+pub mod api;
 mod cli;
 
-// TODO: create -o(--output) flag for `get` to output to a file
-
+use crate::api::Paste;
 use crate::cli::{Cli, Commands};
 use clap::Parser;
-use paste_rs_api::Url;
 use std::fs;
 
 #[tokio::main]
-async fn main() {
+async fn main() -> anyhow::Result<()> {
     let args = Cli::parse();
 
     match &args.command {
         Commands::Get { val, output } => {
-            let url = match Url::new(&*val) {
-                Ok(val) => val,
-                Err(err) => {
-                    eprintln!("ERROR: {:#?}", err);
-                    std::process::exit(-1);
-                }
-            };
+            let paste = Paste::from(val)?;
 
-            let res = match url.make_request().await {
-                Ok(val) => val,
-                Err(err) => {
-                    eprintln!("ERROR: {:#?}", err);
-                    std::process::exit(-1);
-                }
-            };
+            let res = paste.get().await?;
 
             match output {
                 Some(path) => {
-                    match fs::write(path, res) {
-                        Ok(_) => {}
-                        Err(err) => {
-                            eprintln!("ERROR: {:#?}", err);
-                            std::process::exit(-1);
-                        }
-                    }
-                    println!("Successfully wrote {} to {}", url, path.display())
+                    fs::write(path, res)?;
+                    println!(
+                        "Successfully wrote {} to {}",
+                        paste.get_url(),
+                        path.display()
+                    )
                 }
                 None => {
                     println!(
                         "====\t{}\t======================================================",
-                        url
+                        paste.get_url()
                     );
                     println!("");
                     println!("{}", res);
@@ -61,38 +49,19 @@ async fn main() {
             }
         }
         Commands::New { file } => {
-            let data = match fs::read_to_string(file) {
-                Ok(data) => data,
-                Err(err) => {
-                    eprintln!("ERROR: {:#?}", err);
-                    std::process::exit(-1);
-                }
-            };
+            let data = fs::read_to_string(file)?;
 
-            let url = match paste_rs_api::new_paste(data).await {
-                Ok(res) => res,
-                Err(err) => {
-                    eprintln!("ERROR: {:#?}", err);
-                    std::process::exit(-1);
-                }
-            };
-
-            println!("Successfully created new paste at {}", url);
+            let paste = Paste::new(data).await?;
+            println!("Successfully created new paste at {}", paste.get_url());
         }
     }
+    Ok(())
 }
 
 // => A main for testing
-// #[tokio::main]
-// async fn main() {
-//     let mut url = match crate::paste::Url::new("osx") {
-//         Ok(val) => val,
-//         Err(err) => {
-//             eprintln!("Error: {:#?}", err);
-//             std::process::exit(-1);
-//         }
-//     };
+// use crate::api::Paste;
 
-//     let id = url.get_id();
-//     dbg!(id);
+// #[tokio::main]
+// async fn main() -> anyhow::Result<()> {
+//     Ok(())
 // }
