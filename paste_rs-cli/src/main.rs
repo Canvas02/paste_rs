@@ -1,6 +1,8 @@
 // Copyright 2022 Canvas02 <Canvas02@protonmail.com>
 // SPDX-License-Identifier: MIT
 
+// TODO: Use url(https://github.com/servo/rust-url) crate for url parsing
+
 #![deny(dead_code)]
 #![deny(unused_variables)]
 
@@ -59,8 +61,6 @@ async fn main() -> anyhow::Result<()> {
 }
 
 // => A main for testing
-// use crate::api::Paste;
-
 // #[tokio::main]
 // async fn main() -> anyhow::Result<()> {
 //     Ok(())
